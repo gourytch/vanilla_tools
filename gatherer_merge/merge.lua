@@ -9,6 +9,9 @@ verbose = true;
 
 local basedir = arg[0]:match('^.*/') or './';
 local master = basedir .. "MASTER.lua";
+local db_master;
+local initial_size;
+local dbs = {};
 
 function show_help_and_exit()
 	print("use: "..arg[0] .. " options gathersaves [...]");
@@ -23,8 +26,6 @@ gatherfiles resides (usually) in
 ]]);
 	os.exit(0);
 end;
-
-local dbs = {};
 
 if #arg <= 1 then
 	show_help_and_exit();
@@ -41,10 +42,10 @@ for i = 1, #arg do
 		show_help_and_exit();
 	else
 		if db_master == nil then
-			local db_master = GatherDB.new();
+			db_master = GatherDB.new();
 			db_master.verbose = verbose;
 			db_master:load(master);
-			local initial_size = db_master:num_nodes();
+			initial_size = db_master:num_nodes();
 		end;
 		print("process ".. arg[i]);
 		local db = GatherDB.new(arg[i]);
@@ -66,7 +67,7 @@ end;
 if auto_sync then
     for _,db in pairs(dbs) do
         print("synchronize ".. db.fname);
-		dbs[i]:merge(db_master);
-		dbs[i]:save();
+		db:merge(db_master);
+		db:save();
     end;
 end;

@@ -123,12 +123,13 @@ function GatherDB:save(fname)
 	if fname ~= nil then
 		self.fname = fname;
 	end;
+	assert(self.fname ~= nil, "unnamed database cannot be saved");
     backup(self.fname);
 	if self.verbose then
 		print("store " .. self:num_nodes ()
 			.. " nodes (and config) to ".. self.fname);
 	end;
-    local f = io.open(fname, 'w');
+    local f = io.open(self.fname, 'w');
     f:write('GatherItems = ' .. pprint(self.db,1)..'\n');
     f:write('GatherConfig = ' .. pprint(self.cf,1)..'\n');
     f:close();
