@@ -23,6 +23,8 @@ GatherItems = {
 их X и Y равны.
 ]]
 
+require "pprint";
+require "backup";
 
 GatherDB = {};
 GatherDB.__index = GatherDB;
@@ -56,6 +58,7 @@ function GatherDB.new(that)
             num_total   = 0,
             num_added   = 0,
             num_skipped = 0,
+			verbose     = false,
         }, GatherDB);
         if t == 'string' then
             obj:load(that);
@@ -99,76 +102,32 @@ end;
 
 
 function GatherDB:load(fname)
+	self.fname = fname;
     local _GatherItems = GatherItems;
     local _GatherConfig = GatherConfig;
     GatherItems = {};
     GatherConfig = {};
     dofile(fname);
-    self.db = GatherItems;
+    self.db = GatherItems or {};
+    self.cf = GatherConfig or {};
     GatherItems = _GatherItems;
     GatherConfig = _GatherConfig;
-    print("loaded " .. self:num_nodes () .. " nodes in "
-        .. self:num_zones () .. " zones");
-end;
-
-
-local function pprint(v,lvl)
-    function spc(lvl)
-        local s = '';
-        for i = 1, lvl do
-            s = s .. '\t';
-        end;
-        return s;
-    end;
-    local t = type(v);
-    if t == 'nil' then
-        return nil;
-    elseif t == 'boolean' then
-        return tostring(v);
-    elseif t == 'string' then
-        return '"'..v..'"';
-    elseif t == 'number' then
-        return tostring(v);
-    elseif t == 'table' then
-        local s = '{\n';
-        local keys = {};
-        for key, _ in pairs(v) do
-            table.insert(keys, key);
-        end;
-        table.sort(keys, function(a,b) return a < b end);
-        for ix = 1, #keys do
-            key = keys[ix];
-            val = v[key];
-            s = s .. spc(lvl) ..
-                '[' .. pprint(key,0) .. '] = ' ..
-                pprint(val, lvl + 1) ..
-                ',\n';
-        end;
-        s = s .. spc(lvl-1) .. '}';
-        return s;
-    else
-        error("unprocessible type ".. t);
-    end;
-end; -- pprint
-
-
-local function backup(fname)
-    local f = io.open(fname, 'r');
-    if f ~= nil then
-        local fbak = io.open(fname..".backup", 'w');
-        if fbak ~= nil then
-            print("create backup for "..fname);
-            fbak:write(f:read('*a'));
-            fbak:close();
-        end;
-        f:close();
-    end;
+	if self.verbose then
+		print("loaded " .. self:num_nodes () .. " nodes in "
+			.. self:num_zones () .. " zones from " .. self.fname);
+	end;
 end;
 
 
 function GatherDB:save(fname)
-    backup(fname);
-    print("store " .. self:num_nodes () .. " nodes (and config) to "..fname);
+	if fname ~= nil then
+		self.fname = fname;
+	end;
+    backup(self.fname);
+	if self.verbose then
+		print("store " .. self:num_nodes ()
+			.. " nodes (and config) to ".. self.fname);
+	end;
     local f = io.open(fname, 'w');
     f:write('GatherItems = ' .. pprint(self.db,1)..'\n');
     f:write('GatherConfig = ' .. pprint(self.cf,1)..'\n');
@@ -179,6 +138,10 @@ end;
 function GatherDB:merge(that)
     assert(type(that) == 'table');
     assert(getmetatable(that) == GatherDB);
+
+	self.num_added   = 0;
+	self.num_skipped = 0;
+	self.num_total   = 0;
 
     local function merge_continent(a, b)
 
@@ -237,8 +200,10 @@ function GatherDB:merge(that)
     for k, v in pairs(that.db) do
         self.db[k] = merge_continent(self.db[k] or {}, v);
     end;
-    print("merge results: compared=" .. self.num_total ..
-        ", added=" ..  self.num_added ..
-        ", skipped=".. self.num_skipped..
-        ", size=".. self:num_nodes());
+	if self.verbose then
+		print("merge results: compared=" .. self.num_total ..
+			", added=" ..  self.num_added ..
+			", skipped=".. self.num_skipped..
+			", size=".. self:num_nodes());
+	end;
 end; -- merge
