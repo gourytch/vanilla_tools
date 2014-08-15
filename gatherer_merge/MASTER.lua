@@ -57,7 +57,7 @@ GatherItems = {
 					["y"] = 30.4,
 				},
 				[2] = {
-					["count"] = 4,
+					["count"] = 6,
 					["gtype"] = 2,
 					["icon"] = 1,
 					["x"] = 38.35,
@@ -92,7 +92,7 @@ GatherItems = {
 					["y"] = 37.66,
 				},
 				[7] = {
-					["count"] = 3,
+					["count"] = 5,
 					["gtype"] = 2,
 					["icon"] = 1,
 					["x"] = 39.48,
@@ -680,7 +680,7 @@ GatherItems = {
 					["y"] = 42.51,
 				},
 				[65] = {
-					["count"] = 3,
+					["count"] = 7,
 					["gtype"] = 2,
 					["icon"] = 1,
 					["x"] = 32.27,
@@ -694,7 +694,7 @@ GatherItems = {
 					["y"] = 30.05,
 				},
 				[67] = {
-					["count"] = 2,
+					["count"] = 8,
 					["gtype"] = 2,
 					["icon"] = 1,
 					["x"] = 32.43,
@@ -1076,7 +1076,7 @@ GatherItems = {
 			},
 			["solid chest"] = {
 				[1] = {
-					["count"] = 2,
+					["count"] = 3,
 					["gtype"] = 0,
 					["icon"] = 2,
 					["x"] = 35.05,
@@ -1117,7 +1117,7 @@ GatherItems = {
 		[17] = {
 			["armor crate"] = {
 				[1] = {
-					["count"] = 2,
+					["count"] = 5,
 					["gtype"] = 0,
 					["icon"] = 4,
 					["x"] = 64.44,
@@ -1140,7 +1140,7 @@ GatherItems = {
 					["y"] = 40.93,
 				},
 				[3] = {
-					["count"] = 1,
+					["count"] = 2,
 					["gtype"] = 0,
 					["icon"] = 5,
 					["x"] = 55.93,
@@ -1156,7 +1156,7 @@ GatherItems = {
 					["y"] = 54.81,
 				},
 				[2] = {
-					["count"] = 2,
+					["count"] = 6,
 					["gtype"] = 0,
 					["icon"] = 2,
 					["x"] = 52.47,
@@ -1170,28 +1170,28 @@ GatherItems = {
 					["y"] = 43.5,
 				},
 				[4] = {
-					["count"] = 1,
+					["count"] = 3,
 					["gtype"] = 0,
 					["icon"] = 2,
 					["x"] = 62.77,
 					["y"] = 49.65,
 				},
 				[5] = {
-					["count"] = 1,
+					["count"] = 7,
 					["gtype"] = 0,
 					["icon"] = 2,
 					["x"] = 61.66,
 					["y"] = 5.15,
 				},
 				[6] = {
-					["count"] = 1,
+					["count"] = 3,
 					["gtype"] = 0,
 					["icon"] = 2,
 					["x"] = 59.08,
 					["y"] = 24.36,
 				},
 				[7] = {
-					["count"] = 1,
+					["count"] = 2,
 					["gtype"] = 0,
 					["icon"] = 2,
 					["x"] = 39.22,
@@ -1200,7 +1200,7 @@ GatherItems = {
 			},
 			["box of assorted parts"] = {
 				[1] = {
-					["count"] = 1,
+					["count"] = 7,
 					["gtype"] = 0,
 					["icon"] = 1,
 					["x"] = 61.33,
@@ -1323,7 +1323,7 @@ GatherItems = {
 					["y"] = 9.72,
 				},
 				[14] = {
-					["count"] = 2,
+					["count"] = 6,
 					["gtype"] = 2,
 					["icon"] = 1,
 					["x"] = 39.85,
@@ -1365,7 +1365,7 @@ GatherItems = {
 					["y"] = 27.85,
 				},
 				[20] = {
-					["count"] = 2,
+					["count"] = 6,
 					["gtype"] = 2,
 					["icon"] = 1,
 					["x"] = 46.18,
@@ -1553,7 +1553,7 @@ GatherItems = {
 			},
 			["floating wreckage"] = {
 				[1] = {
-					["count"] = 1,
+					["count"] = 5,
 					["gtype"] = 0,
 					["icon"] = 14,
 					["x"] = 63.54,
@@ -1597,7 +1597,7 @@ GatherItems = {
 					["y"] = 47.12,
 				},
 				[4] = {
-					["count"] = 1,
+					["count"] = 2,
 					["gtype"] = 0,
 					["icon"] = 4,
 					["x"] = 61.4,
@@ -1744,7 +1744,7 @@ GatherItems = {
 					["y"] = 58.15,
 				},
 				[4] = {
-					["count"] = 4,
+					["count"] = 6,
 					["gtype"] = 2,
 					["icon"] = 2,
 					["x"] = 37.95,
@@ -1765,7 +1765,7 @@ GatherItems = {
 					["y"] = 18.11,
 				},
 				[7] = {
-					["count"] = 6,
+					["count"] = 9,
 					["gtype"] = 2,
 					["icon"] = 2,
 					["x"] = 57.52,
@@ -1779,7 +1779,7 @@ GatherItems = {
 					["y"] = 26.62,
 				},
 				[9] = {
-					["count"] = 3,
+					["count"] = 5,
 					["gtype"] = 2,
 					["icon"] = 2,
 					["x"] = 38.49,
@@ -1807,14 +1807,14 @@ GatherItems = {
 					["y"] = 12.87,
 				},
 				[13] = {
-					["count"] = 4,
+					["count"] = 6,
 					["gtype"] = 2,
 					["icon"] = 2,
 					["x"] = 40.05,
 					["y"] = 22.08,
 				},
 				[14] = {
-					["count"] = 3,
+					["count"] = 7,
 					["gtype"] = 2,
 					["icon"] = 2,
 					["x"] = 50.87,
@@ -2000,7 +2000,7 @@ GatherItems = {
 		[16] = {
 			["barrel of milk"] = {
 				[1] = {
-					["count"] = 1,
+					["count"] = 3,
 					["gtype"] = 0,
 					["icon"] = 5,
 					["x"] = 62.86,
@@ -2134,14 +2134,14 @@ GatherItems = {
 			},
 			["tattered chest"] = {
 				[1] = {
-					["count"] = 1,
+					["count"] = 2,
 					["gtype"] = 0,
 					["icon"] = 2,
 					["x"] = 63.24,
 					["y"] = 58.7,
 				},
 				[2] = {
-					["count"] = 1,
+					["count"] = 2,
 					["gtype"] = 0,
 					["icon"] = 2,
 					["x"] = 62.89,
