@@ -57,8 +57,10 @@ function GatherDB.new(that)
             min_dist    = 0.1,
             num_total   = 0,
             num_added   = 0,
+            num_updated = 0,
             num_skipped = 0,
             verbose     = false,
+            dirty       = false,
         }, GatherDB);
         if t == 'string' then
             obj:load(that);
@@ -116,14 +118,21 @@ function GatherDB:load(fname)
         print("loaded " .. self:num_nodes () .. " nodes in "
             .. self:num_zones () .. " zones from " .. self.fname);
     end;
+    self.dirty = false;
 end;
 
 
-function GatherDB:save(fname)
+function GatherDB:save(fname, force)
     if fname ~= nil then
         self.fname = fname;
     end;
     assert(self.fname ~= nil, "unnamed database cannot be saved");
+    if not self.dirty and not force then
+        if self.verbose then
+            print("database is not modified. saving not required");
+        end;
+        return;
+    end;
     backup(self.fname);
     if self.verbose then
         print("store " .. self:num_nodes ()
@@ -141,6 +150,7 @@ function GatherDB:merge(that)
     assert(getmetatable(that) == GatherDB);
 
     self.num_added   = 0;
+    self.num_updated = 0;
     self.num_skipped = 0;
     self.num_total   = 0;
 
@@ -165,17 +175,20 @@ function GatherDB:merge(that)
                         if is_same_node(v, vr) then
                             if vr.count < v.count then
                                 vr.count = v.count;
+                                self.dirty = true;
+                                self.num_updated = self.num_updated + 1;
+                            else
+                                self.num_skipped = self.num_skipped + 1;
                             end;
                             found = true;
                             break;
                         end;
                     end;
-                    if found then
-                        self.num_skipped = self.num_skipped + 1;
-                    else
+                    if not found then
                         r[#r+1] = deepcopy(v);
                         self.num_added = self.num_added + 1;
                         self.num_total = self.num_total + 1;
+                        self.dirty = true;
                     end;
                 end;
                 return r;
@@ -207,7 +220,8 @@ function GatherDB:merge(that)
     if self.verbose then
         print("merge results: compared=" .. self.num_total ..
             ", added=" ..  self.num_added ..
-            ", skipped=".. self.num_skipped..
-            ", size=".. self:num_nodes());
+            ", updated=".. self.num_updated ..
+            ", skipped=".. self.num_skipped ..
+            ", size=" .. self:num_nodes());
     end;
 end; -- merge
