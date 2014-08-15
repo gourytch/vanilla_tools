@@ -2,14 +2,23 @@
 set -e
 set -x
 
-if [ "x$GATHERER_SAVES" = "x" ]; then
-  echo "GATHERER_SAVES environment variable is not set." 1>&2
+if [ "x$GATHERER_HOME" = "x" ]; then
+  GATHERER_HOME=$(dirname $(readlink -f "$0") )
 fi
 
-cd $(dirname $(readlink -f "$0") )
+cd "$GATHERER_HOME"
+if [ ! -f merge.lua ]; then
+  echo "merge.lua not found. set up GATHERER_HOME properly and re-run me" 1>&2
+  exit 1
+fi
 
-git fetch --all
-git pull
+if [ "x$GATHERER_SAVES" = "x" ]; then
+  echo "set GATHERER_SAVES environment variable and re-run me" 1>&2
+  exit 1
+fi
+
+git pull origin master
 lua ./merge.lua $GATHERER_SAVES
-git commit -a -m "database merged by script at $(date +'%F %T')"
+git add MASTER.lua
+git commit -m "database merged by script at $(date +'%F %T')"
 git push origin master
