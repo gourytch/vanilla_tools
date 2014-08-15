@@ -57,8 +57,10 @@ function GatherDB.new(that)
             min_dist    = 0.1,
             num_total   = 0,
             num_added   = 0,
+            num_updated = 0,
             num_skipped = 0,
-			verbose     = false,
+            verbose     = false,
+            dirty       = false,
         }, GatherDB);
         if t == 'string' then
             obj:load(that);
@@ -102,7 +104,7 @@ end;
 
 
 function GatherDB:load(fname)
-	self.fname = fname;
+    self.fname = fname;
     local _GatherItems = GatherItems;
     local _GatherConfig = GatherConfig;
     GatherItems = {};
@@ -112,23 +114,30 @@ function GatherDB:load(fname)
     self.cf = GatherConfig or {};
     GatherItems = _GatherItems;
     GatherConfig = _GatherConfig;
-	if self.verbose then
-		print("loaded " .. self:num_nodes () .. " nodes in "
-			.. self:num_zones () .. " zones from " .. self.fname);
-	end;
+    if self.verbose then
+        print("loaded " .. self:num_nodes () .. " nodes in "
+            .. self:num_zones () .. " zones from " .. self.fname);
+    end;
+    self.dirty = false;
 end;
 
 
-function GatherDB:save(fname)
-	if fname ~= nil then
-		self.fname = fname;
-	end;
-	assert(self.fname ~= nil, "unnamed database cannot be saved");
+function GatherDB:save(fname, force)
+    if fname ~= nil then
+        self.fname = fname;
+    end;
+    assert(self.fname ~= nil, "unnamed database cannot be saved");
+    if not self.dirty and not force then
+        if self.verbose then
+            print("database is not modified. saving not required");
+        end;
+        return;
+    end;
     backup(self.fname);
-	if self.verbose then
-		print("store " .. self:num_nodes ()
-			.. " nodes (and config) to ".. self.fname);
-	end;
+    if self.verbose then
+        print("store " .. self:num_nodes ()
+            .. " nodes (and config) to ".. self.fname);
+    end;
     local f = io.open(self.fname, 'w');
     f:write('GatherItems = ' .. pprint(self.db,1)..'\n');
     f:write('GatherConfig = ' .. pprint(self.cf,1)..'\n');
@@ -140,9 +149,10 @@ function GatherDB:merge(that)
     assert(type(that) == 'table');
     assert(getmetatable(that) == GatherDB);
 
-	self.num_added   = 0;
-	self.num_skipped = 0;
-	self.num_total   = 0;
+    self.num_added   = 0;
+    self.num_updated = 0;
+    self.num_skipped = 0;
+    self.num_total   = 0;
 
     local function merge_continent(a, b)
 
@@ -163,16 +173,22 @@ function GatherDB:merge(that)
                     local found = false;
                     for _, vr in pairs(r) do
                         if is_same_node(v, vr) then
+                            if vr.count < v.count then
+                                vr.count = v.count;
+                                self.dirty = true;
+                                self.num_updated = self.num_updated + 1;
+                            else
+                                self.num_skipped = self.num_skipped + 1;
+                            end;
                             found = true;
                             break;
                         end;
                     end;
-                    if found then
-                        self.num_skipped = self.num_skipped + 1;
-                    else
+                    if not found then
                         r[#r+1] = deepcopy(v);
                         self.num_added = self.num_added + 1;
                         self.num_total = self.num_total + 1;
+                        self.dirty = true;
                     end;
                 end;
                 return r;
@@ -201,10 +217,11 @@ function GatherDB:merge(that)
     for k, v in pairs(that.db) do
         self.db[k] = merge_continent(self.db[k] or {}, v);
     end;
-	if self.verbose then
-		print("merge results: compared=" .. self.num_total ..
-			", added=" ..  self.num_added ..
-			", skipped=".. self.num_skipped..
-			", size=".. self:num_nodes());
-	end;
+    if self.verbose then
+        print("merge results: compared=" .. self.num_total ..
+            ", added=" ..  self.num_added ..
+            ", updated=".. self.num_updated ..
+            ", skipped=".. self.num_skipped ..
+            ", size=" .. self:num_nodes());
+    end;
 end; -- merge
