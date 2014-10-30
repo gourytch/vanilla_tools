@@ -3,7 +3,7 @@ GatherItems = {
 		[1] = {
 			["battered chest"] = {
 				[1] = {
-					["count"] = 3,
+					["count"] = 5,
 					["gtype"] = 0,
 					["icon"] = 2,
 					["x"] = 18.48,
@@ -3712,7 +3712,7 @@ GatherItems = {
 			},
 			["giant clam"] = {
 				[1] = {
-					["count"] = 2,
+					["count"] = 3,
 					["gtype"] = 0,
 					["icon"] = 3,
 					["x"] = 63.58,
@@ -4321,6 +4321,29 @@ GatherItems = {
 					["icon"] = 2,
 					["x"] = 55.06,
 					["y"] = 26.59,
+				},
+			},
+			["stranglekelp"] = {
+				[1] = {
+					["count"] = 1,
+					["gtype"] = 1,
+					["icon"] = 7,
+					["x"] = 63.33,
+					["y"] = 54.02,
+				},
+				[2] = {
+					["count"] = 1,
+					["gtype"] = 1,
+					["icon"] = 7,
+					["x"] = 63.12,
+					["y"] = 52.22,
+				},
+				[3] = {
+					["count"] = 1,
+					["gtype"] = 1,
+					["icon"] = 7,
+					["x"] = 63.86,
+					["y"] = 54.83,
 				},
 			},
 			["tattered chest"] = {
@@ -5445,6 +5468,15 @@ GatherItems = {
 			},
 		},
 		[18] = {
+			["floating wreckage"] = {
+				[1] = {
+					["count"] = 4,
+					["gtype"] = 0,
+					["icon"] = 14,
+					["x"] = 29.58,
+					["y"] = 37.41,
+				},
+			},
 			["solid chest"] = {
 				[1] = {
 					["count"] = 1,
@@ -5452,6 +5484,13 @@ GatherItems = {
 					["icon"] = 2,
 					["x"] = 45.65,
 					["y"] = 9.82,
+				},
+				[2] = {
+					["count"] = 1,
+					["gtype"] = 0,
+					["icon"] = 2,
+					["x"] = 34.61,
+					["y"] = 51.55,
 				},
 			},
 		},
