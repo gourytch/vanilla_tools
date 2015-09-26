@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: PetXP
+## Notes: Show XP gained your pet
+## Author: Gourytch
+## eMail: gour@mail.ru
+## Version: 0.0.1
+PetXP.lua
+PetXP.xml
+
