@@ -3,7 +3,7 @@
 ## Notes: Show XP gained your pet
 ## Author: Gourytch
 ## eMail: gour@mail.ru
-## Version: 0.0.1
+## Version: 0.0.2
 PetXP.lua
 PetXP.xml
 
