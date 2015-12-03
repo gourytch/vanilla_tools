@@ -52,7 +52,7 @@ function PetXP_ShowUpdatedStats()
     local delta = base - this.pet_basestat[i];
     if (delta ~= 0) then
       PetXP_Show(format("pet's %s base value changed to %s, and is %s now",
-        STA, colored_int(delta), baseval));
+        STAT_ID[i], colored_int(delta), baseval));
         this.pet_basestat[i] = baseval;
     end
   end
@@ -163,10 +163,10 @@ function PetXP_Check()
       local t_s = math.floor(left / XPperSec);
       local t_s_sav = t_s;
       local estT = "";
-      local t_h = math.floor(t_s / 3600); t_s = bit.mod(t_s, 3600);
-      local t_m = math.floor(t_s / 60);
+      local t_h = math.floor(t_s / 3600); t_s = t_s - t_h * 3600;
+      local t_m = math.floor(t_s / 60); t_s = t_s - t_m * 60;
       if (t_h > 0) then
-        estT = format("; est. ~%.1f hour(s)", (t_h + t_m * 0.6));
+        estT = format("; est. ~%.1f hour(s)", (t_h + t_m / 60));
       elseif (t_m > 0) then
         estT = format("; est. ~%d minute(s)", (t_m));
       else
