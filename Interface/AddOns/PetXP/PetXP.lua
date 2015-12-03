@@ -52,7 +52,7 @@ function PetXP_ShowUpdatedStats()
     local delta = base - this.pet_basestat[i];
     if (delta ~= 0) then
       PetXP_Show(format("pet's %s base value changed to %s, and is %s now",
-        STAT_ID[i], colored_int(delta), baseval));
+        STAT_ID[i], colored_int(delta), base));
         this.pet_basestat[i] = baseval;
     end
   end
